@@ -106,6 +106,10 @@ class PersonCl {
         
         this.birthYear = year;
     } 
+
+    static getClass () {
+        return this;
+    }
 }
 
 const person1 = new PersonCl("Varinder", 2001);
@@ -123,3 +127,6 @@ console.log(person1.age)
 person1.age = 2002;
 
 console.log(person1.age)
+
+
+console.dir(PersonCl.getClass())
