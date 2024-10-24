@@ -1,37 +1,37 @@
 'use strict';
 
 
-const Person = function (name, birthYear) {
-    this.name = name;
-    this.birthYear = birthYear;
+// const Person = function (name, birthYear) {
+//     this.name = name;
+//     this.birthYear = birthYear;
 
-    // this.calcAge = function () {
-    //     return 2024 -  this.birthYear;
-    // }
-    // Never create any mehtod inside the construtor
-}
+//     // this.calcAge = function () {
+//     //     return 2024 -  this.birthYear;
+//     // }
+//     // Never create any mehtod inside the construtor
+// }
 
-Person.prototype.calcAge =  function () {
-    return 2024 - this.birthYear; 
-}
+// Person.prototype.calcAge =  function () {
+//     return 2024 - this.birthYear; 
+// }
 
-const varinder = new Person("Varinder" , 2001);
-const komal = new Person("Komal" , 2003);
-const aman = new Person("Aman" , 2001);
+// const varinder = new Person("Varinder" , 2001);
+// const komal = new Person("Komal" , 2003);
+// const aman = new Person("Aman" , 2001);
 
-console.log(varinder.calcAge(), komal.calcAge(), aman.calcAge());
+// console.log(varinder.calcAge(), komal.calcAge(), aman.calcAge());
 
 
-// delegation 
-const person = {
-    greet: function() {
-        console.log(`Hello, my name is ${this.name}.`);
-    }
-};
+// // delegation 
+// const person = {
+//     greet: function() {
+//         console.log(`Hello, my name is ${this.name}.`);
+//     }
+// };
 
-const alice = Object.create(person);
-alice.name = 'Alice';
-alice.greet(); // Outputs: Hello, my name is Alice.
+// const alice = Object.create(person);
+// alice.name = 'Alice';
+// alice.greet(); // Outputs: Hello, my name is Alice.
 
 
 
@@ -50,30 +50,59 @@ DATA CAR 2: 'Mercedes' going at 95 km/h
 GOOD
 
 */
-const Car = function (name, speed) {
-    this.name = name;
-    this.speed = speed;
+// const Car = function (name, speed) {
+//     this.name = name;
+//     this.speed = speed;
+// }
+
+// Car.prototype.accelerate = function () {
+//     return `${this.name} going at ${this.speed += 10} Km/h`;
+// }
+
+// Car.prototype.brake = function () {
+//     return `${this.name} going at ${this.speed -= 5} Km/h`;
+// }
+
+// const bmw = new Car("BMW", 100);
+// const audi = new Car("Audi", 70);
+
+// console.log("initial speed", bmw.speed)
+// console.log("initial speed", audi.speed)
+
+// console.log("accelerate speed", bmw.accelerate())
+// console.log("accelerate speed", audi.accelerate())
+
+// console.log("brake speed", bmw.brake())
+// console.log("brake speed", audi.brake())
+
+// console.log("last speed", bmw.speed)
+// console.log("last speed", audi.speed)
+
+// es6 classes
+
+// class expression
+// const PersonCl= class{
+
+// }
+
+// class declaration
+class PersonCl {
+    constructor(name, birthYear){
+        this.name = name;
+        this.birthYear = birthYear;
+    }
+
+    // methods will be added to .prototype property
+    calcAge () {
+        return 2024 - this.birthYear;
+    }
 }
 
-Car.prototype.accelerate = function () {
-    return `${this.name} going at ${this.speed += 10} Km/h`;
+const person1 = new PersonCl("Varinder", 2001);
+const person2 = {
+    name: "Komal",
+    birthYear: 2003
 }
 
-Car.prototype.brake = function () {
-    return `${this.name} going at ${this.speed -= 5} Km/h`;
-}
-
-const bmw = new Car("BMW", 100);
-const audi = new Car("Audi", 70);
-
-console.log("initial speed", bmw.speed)
-console.log("initial speed", audi.speed)
-
-console.log("accelerate speed", bmw.accelerate())
-console.log("accelerate speed", audi.accelerate())
-
-console.log("brake speed", bmw.brake())
-console.log("brake speed", audi.brake())
-
-console.log("last speed", bmw.speed)
-console.log("last speed", audi.speed)
+console.log(person1, person1.calcAge());
+console.log(person2, person1.calcAge.call(person2));
