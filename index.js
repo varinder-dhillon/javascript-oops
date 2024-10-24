@@ -96,6 +96,16 @@ class PersonCl {
     calcAge () {
         return 2024 - this.birthYear;
     }
+
+    get age () {
+        return this.birthYear + 10
+    }
+
+    set age (year){
+        console.log("year", year);
+        
+        this.birthYear = year;
+    } 
 }
 
 const person1 = new PersonCl("Varinder", 2001);
@@ -106,3 +116,10 @@ const person2 = {
 
 console.log(person1, person1.calcAge());
 console.log(person2, person1.calcAge.call(person2));
+
+
+console.log(person1.age)
+
+person1.age = 2002;
+
+console.log(person1.age)
