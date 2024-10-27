@@ -161,37 +161,125 @@ DATA CAR 1: 'Ford' going at 120 km/h
 GOOD LUCK 😀
 */
 
-class CarCl {
-    constructor(car, speed){
-        this.car = car;
-        this.speed = speed;
-    }
+// class CarCl {
+//     constructor(car, speed){
+//         this.car = car;
+//         this.speed = speed;
+//     }
 
-    accelerate () {
-       return `${this.car} going at ${this.speed += 10} Km/h`
-    }
+//     accelerate () {
+//        return `${this.car} going at ${this.speed += 10} Km/h`
+//     }
 
-    brake () {
-        return `${this.car} going at ${this.speed -= 10} Km/h`
-     }
+//     brake () {
+//         return `${this.car} going at ${this.speed -= 10} Km/h`
+//      }
 
-    get speedUS (){
-        return this.speed/1.6;
-    }
+//     get speedUS (){
+//         return this.speed/1.6;
+//     }
 
-    set speedUS (speed){
-        return this.speed = speed*1.6
-    }
+//     set speedUS (speed){
+//         return this.speed = speed*1.6
+//     }
+// }
+
+// const ford = new CarCl("Ford", 150);
+
+// console.log(ford.accelerate());
+// console.log(ford.speedUS);
+// console.log(ford.brake())
+
+// ford.speedUS = 50; 
+
+// console.log(ford.accelerate());
+// console.log(ford.speedUS);
+// console.log(ford.brake())
+
+//Inheritance between constructor functions
+
+const Person = function (firstName, birthYear){
+    this.firstName = firstName;
+    this.birthYear = birthYear;
 }
 
-const ford = new CarCl("Ford", 150);
+Person.prototype.calcAge = function(){
+    return 2024-this.birthYear;
+}
 
-console.log(ford.accelerate());
-console.log(ford.speedUS);
-console.log(ford.brake())
+const Student = function (firstName, birthYear, course) {
+    Person.call(this, firstName, birthYear);
+    this.course = course;
+}
 
-ford.speedUS = 50; 
+Student.prototype = Object.create(Person.prototype)
+Student.prototype.constructor = Student;
 
-console.log(ford.accelerate());
-console.log(ford.speedUS);
-console.log(ford.brake())
+Student.prototype.introduce = function () {
+    console.log(`My name is ${this.name} and I study ${this.course}`);
+}
+
+
+const shubham = new Person("Shubham", 2008);
+const komal = new Student("Komal", 2003,  'Web Designing');
+
+console.log(shubham.calcAge());
+console.log(komal);
+
+
+///////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+const Car = function (name, speed) {
+    this.name = name;
+    this.speed = speed;
+}
+
+Car.prototype.accelerate = function () {
+    return `${this.name} going at ${this.speed += 10} Km/h`;
+}
+
+Car.prototype.brake = function () {
+    console.log(`${this.name} going at ${this.speed -= 5} Km/h`);
+}
+
+const CarEV = function (name, speed, charge) {
+    Car.call(this, name, speed); // Call the parent constructor
+    this.charge = charge;
+}
+// Inherit from Car
+CarEV.prototype = Object.create(Car.prototype);
+
+// Reset the constructor
+CarEV.prototype.constructor = CarEV;
+
+// Add a method to CarEV
+CarEV.prototype.chargeBattery =  function(charge){
+    this.charge = charge;
+}
+
+// overwrite a method method of parent constructor (Polymorphism)
+CarEV.prototype.accelerate = function () {
+    console.log(`${this.name} going at ${this.speed += 20} Km/h, with a charge of ${this.charge-=1}%`);
+}
+
+const tesla = new CarEV("Tesla", 150, 80);
+console.log(tesla);
+
+tesla.accelerate();
+tesla.accelerate();
+tesla.brake();
+tesla.accelerate();
+tesla.chargeBattery(90);
+tesla.accelerate();
