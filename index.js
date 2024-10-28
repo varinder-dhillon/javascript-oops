@@ -286,45 +286,74 @@ GOOD LUCK 😀
 
 
 // class declaration
-class PersonCl {
-    constructor(name, birthYear){
-        this.name = name;
+// class PersonCl {
+//     constructor(name, birthYear){
+//         this.name = name;
+//         this.birthYear = birthYear;
+//     }
+
+//     // methods will be added to .prototype property
+//     calcAge () {
+//         return 2024 - this.birthYear;
+//     }
+
+//     get age () {
+//         return this.birthYear + 10
+//     }
+
+//     set age (year){
+//         console.log("year", year);
+        
+//         this.birthYear = year;
+//     } 
+
+//     static getClass () {
+//         return this;
+//     }
+// }
+
+// class StudentCl extends PersonCl {
+//     constructor(name, birthYear, course){
+//         super(name, birthYear) // refering the properties to parent class constructor
+//         this.course = course;
+//     }
+
+
+//     get age (){
+//         return this.birthYear + 20
+//     }
+
+// }
+
+// const binni = new StudentCl("Binni", 2001, "Web developer");
+
+// console.log(binni, binni.age)
+
+
+// Inheritance between Classes : Object.create();
+
+const PersonProto = {
+    calcAge () {
+        console.log(2037 - this.birthYear);
+    },
+
+    init(firstName, birthYear){
+        this.firstName = firstName;
         this.birthYear = birthYear;
     }
-
-    // methods will be added to .prototype property
-    calcAge () {
-        return 2024 - this.birthYear;
-    }
-
-    get age () {
-        return this.birthYear + 10
-    }
-
-    set age (year){
-        console.log("year", year);
-        
-        this.birthYear = year;
-    } 
-
-    static getClass () {
-        return this;
-    }
 }
 
-class StudentCl extends PersonCl {
-    constructor(name, birthYear, course){
-        super(name, birthYear) // refering the properties to parent class constructor
-        this.course = course;
-    }
+const StudentProto = Object.create(PersonProto);
 
-
-    get age (){
-        return this.birthYear + 20
-    }
-
+StudentProto.init = function (firstName, birthYear, course) {
+    PersonProto.init.call(this, firstName, birthYear);
+    this.course = course;
 }
 
-const binni = new StudentCl("Binni", 2001, "Web developer");
+StudentProto.introduce = function () {
+    console.log(this.firstName, this.course)
+}
 
-console.log(binni, binni.age)
+const binni = Object.create(StudentProto);
+binni.init("Binni", 2001, "BCA")
+binni.introduce()
