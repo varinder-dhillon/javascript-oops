@@ -198,33 +198,33 @@ GOOD LUCK 😀
 
 //Inheritance between constructor functions
 
-const Person = function (firstName, birthYear){
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-}
+// const Person = function (firstName, birthYear){
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+// }
 
-Person.prototype.calcAge = function(){
-    return 2024-this.birthYear;
-}
+// Person.prototype.calcAge = function(){
+//     return 2024-this.birthYear;
+// }
 
-const Student = function (firstName, birthYear, course) {
-    Person.call(this, firstName, birthYear);
-    this.course = course;
-}
+// const Student = function (firstName, birthYear, course) {
+//     Person.call(this, firstName, birthYear);
+//     this.course = course;
+// }
 
-Student.prototype = Object.create(Person.prototype)
-Student.prototype.constructor = Student;
+// Student.prototype = Object.create(Person.prototype)
+// Student.prototype.constructor = Student;
 
-Student.prototype.introduce = function () {
-    console.log(`My name is ${this.name} and I study ${this.course}`);
-}
+// Student.prototype.introduce = function () {
+//     console.log(`My name is ${this.name} and I study ${this.course}`);
+// }
 
 
-const shubham = new Person("Shubham", 2008);
-const komal = new Student("Komal", 2003,  'Web Designing');
+// const shubham = new Person("Shubham", 2008);
+// const komal = new Student("Komal", 2003,  'Web Designing');
 
-console.log(shubham.calcAge());
-console.log(komal);
+// console.log(shubham.calcAge());
+// console.log(komal);
 
 
 ///////////////////////////////////////
@@ -241,45 +241,90 @@ DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 GOOD LUCK 😀
 */
 
-const Car = function (name, speed) {
-    this.name = name;
-    this.speed = speed;
+// const Car = function (name, speed) {
+//     this.name = name;
+//     this.speed = speed;
+// }
+
+// Car.prototype.accelerate = function () {
+//     return `${this.name} going at ${this.speed += 10} Km/h`;
+// }
+
+// Car.prototype.brake = function () {
+//     console.log(`${this.name} going at ${this.speed -= 5} Km/h`);
+// }
+
+// const CarEV = function (name, speed, charge) {
+//     Car.call(this, name, speed); // Call the parent constructor
+//     this.charge = charge;
+// }
+// // Inherit from Car
+// CarEV.prototype = Object.create(Car.prototype);
+
+// // Reset the constructor
+// CarEV.prototype.constructor = CarEV;
+
+// // Add a method to CarEV
+// CarEV.prototype.chargeBattery =  function(charge){
+//     this.charge = charge;
+// }
+
+// // overwrite a method method of parent constructor (Polymorphism)
+// CarEV.prototype.accelerate = function () {
+//     console.log(`${this.name} going at ${this.speed += 20} Km/h, with a charge of ${this.charge-=1}%`);
+// }
+
+// const tesla = new CarEV("Tesla", 150, 80);
+// console.log(tesla);
+
+// tesla.accelerate();
+// tesla.accelerate();
+// tesla.brake();
+// tesla.accelerate();
+// tesla.chargeBattery(90);
+// tesla.accelerate();
+
+
+// class declaration
+class PersonCl {
+    constructor(name, birthYear){
+        this.name = name;
+        this.birthYear = birthYear;
+    }
+
+    // methods will be added to .prototype property
+    calcAge () {
+        return 2024 - this.birthYear;
+    }
+
+    get age () {
+        return this.birthYear + 10
+    }
+
+    set age (year){
+        console.log("year", year);
+        
+        this.birthYear = year;
+    } 
+
+    static getClass () {
+        return this;
+    }
 }
 
-Car.prototype.accelerate = function () {
-    return `${this.name} going at ${this.speed += 10} Km/h`;
+class StudentCl extends PersonCl {
+    constructor(name, birthYear, course){
+        super(name, birthYear) // refering the properties to parent class constructor
+        this.course = course;
+    }
+
+
+    get age (){
+        return this.birthYear + 20
+    }
+
 }
 
-Car.prototype.brake = function () {
-    console.log(`${this.name} going at ${this.speed -= 5} Km/h`);
-}
+const binni = new StudentCl("Binni", 2001, "Web developer");
 
-const CarEV = function (name, speed, charge) {
-    Car.call(this, name, speed); // Call the parent constructor
-    this.charge = charge;
-}
-// Inherit from Car
-CarEV.prototype = Object.create(Car.prototype);
-
-// Reset the constructor
-CarEV.prototype.constructor = CarEV;
-
-// Add a method to CarEV
-CarEV.prototype.chargeBattery =  function(charge){
-    this.charge = charge;
-}
-
-// overwrite a method method of parent constructor (Polymorphism)
-CarEV.prototype.accelerate = function () {
-    console.log(`${this.name} going at ${this.speed += 20} Km/h, with a charge of ${this.charge-=1}%`);
-}
-
-const tesla = new CarEV("Tesla", 150, 80);
-console.log(tesla);
-
-tesla.accelerate();
-tesla.accelerate();
-tesla.brake();
-tesla.accelerate();
-tesla.chargeBattery(90);
-tesla.accelerate();
+console.log(binni, binni.age)
