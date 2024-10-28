@@ -332,28 +332,84 @@ GOOD LUCK 😀
 
 // Inheritance between Classes : Object.create();
 
-const PersonProto = {
-    calcAge () {
-        console.log(2037 - this.birthYear);
-    },
+// const PersonProto = {
+//     calcAge () {
+//         console.log(2037 - this.birthYear);
+//     },
 
-    init(firstName, birthYear){
-        this.firstName = firstName;
-        this.birthYear = birthYear;
+//     init(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//     }
+// }
+
+// const StudentProto = Object.create(PersonProto);
+
+// StudentProto.init = function (firstName, birthYear, course) {
+//     PersonProto.init.call(this, firstName, birthYear);
+//     this.course = course;
+// }
+
+// StudentProto.introduce = function () {
+//     console.log(this.firstName, this.course)
+// }
+
+// const binni = Object.create(StudentProto);
+// binni.init("Binni", 2001, "BCA")
+// binni.introduce()
+
+
+// Class encapsulation Practice
+
+// 1 -> Public fields -> these fields are living in the instance not in the prototype
+// 2 -> Private fields
+// 3 -> Public fields
+// 4 -> Private fields
+
+class Account {
+    // 1 -> Public fields 
+    locale = navigator.language;
+
+    // 2 -> Private fields
+    #movements = [];
+    #pin;
+
+
+    constructor(owner, currency, pin){
+        this.owner = owner;
+        this.currency = currency;
+        this.#pin = pin;
+    }
+
+    // 3 -> Public methods
+    deposit(val){
+        this.#movements.push(val)
+    }
+
+    withdraw(val){
+        this.deposit(-val);
+    }
+
+    
+    requestLoan (val){
+        if(this.#approveLoan(val)){
+            this.deposit(val);
+            console.log("Loan is approved!");
+        }
+    }
+
+    // 4 -> Private Methods
+    #approveLoan(val){
+        if(val){
+            return true;
+        }
     }
 }
 
-const StudentProto = Object.create(PersonProto);
 
-StudentProto.init = function (firstName, birthYear, course) {
-    PersonProto.init.call(this, firstName, birthYear);
-    this.course = course;
-}
+const acc1 = new Account("Varinder", "EUR", 2585);
+acc1.deposit(500);
+acc1.withdraw(50);
 
-StudentProto.introduce = function () {
-    console.log(this.firstName, this.course)
-}
-
-const binni = Object.create(StudentProto);
-binni.init("Binni", 2001, "BCA")
-binni.introduce()
+acc1.requestLoan(500);
+console.log(acc1)
